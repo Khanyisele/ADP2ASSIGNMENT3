@@ -20,17 +20,17 @@ import java.util.Date;
  * @author Khanyisele Peyi 218329091
  */
 public class ReadFile {
- //creating global variables
+
 
  private ObjectInputStream input;
- //creating array formattedDate customer and supplier
+
  ArrayList<Customer> CustArray = new ArrayList<>();
  ArrayList<Supplier> SuppArray = new ArrayList<>();
  int CustomersCanRent;
  int CustomersCannotRent;
  int age[];
 
- //opens ser file
+
  public void openFile() {
  try {
  input = new ObjectInputStream(new FileInputStream("stakeholder.ser"));
@@ -40,21 +40,20 @@ public class ReadFile {
  }
  }
 
- //adds all stakeholders to corresponding arrays
+ 
  public void readFile() {
 
  try {
- //creating temp variable of type stakeholder
- Stakeholder temp;
+
 
  while (true) {
  temp = (Stakeholder) input.readObject();
- //if stakeholder(temp) is a customer it will add it to the customer array
+
  if (temp instanceof Customer) {
- CustArray.add((Customer) temp); //casting it to Customer
- //if stakeholder(temp) is a supplier it will add it to the customer array
+ CustArray.add((Customer) temp); 
+
  } else if (temp instanceof Supplier) {
- SuppArray.add((Supplier) temp); //casting it to supplier
+ SuppArray.add((Supplier) temp); 
 
  }
 
@@ -80,7 +79,7 @@ public class ReadFile {
  }
  }
 
- //prints all suppliers to console
+
  public void printSupplier() {
  System.out.println("Suppliers");
  for (int i = 0; i < SuppArray.size(); i++) {
@@ -88,7 +87,7 @@ public class ReadFile {
  }
  }
 
- //closes file
+ 
  public void closeFile() {
  try {
  input.close();
@@ -107,7 +106,7 @@ public class ReadFile {
  }
  }
 
- //checks if a customer can rent
+
  public void canRent() {
  for (int i = 0; i < CustArray.size(); i++) {
  if (CustArray.get(i).getCanRent() == true) {
@@ -118,21 +117,21 @@ public class ReadFile {
  }
  }
 
- //sorting customer by ID
+ 
  public void sort() {
  CustArray.sort(Comparator.comparing(Stakeholder::getStHolderId));
  }
  
- //formatting the date of birth to dd mmm yyyy
+ 
  public void formatDOB() {
  try{
- DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd"); //current date format
+ DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd"); 
 
  for (int i = 0; i < CustArray.size(); i++) {
- String DOB = CustArray.get(i).getDateOfBirth(); //getting the Date of birth of each customer
- Date formattedDate = format1.parse(DOB); //parsing the current date format to formattedDate
- DateFormat format2 = new SimpleDateFormat("dd MMM yyyy"); //desired date format
- CustArray.get(i).setDateOfBirth(format2.format(formattedDate)); //changing it to desired format
+ String DOB = CustArray.get(i).getDateOfBirth();
+ Date formattedDate = format1.parse(DOB);
+ DateFormat format2 = new SimpleDateFormat("dd MMM yyyy"); 
+ CustArray.get(i).setDateOfBirth(format2.format(formattedDate));
  }
  }
  catch(ParseException pe){
@@ -140,16 +139,16 @@ public class ReadFile {
  }
  }
 
- //sorting supplier by Name
+
  public void sortSupplier() {
  SuppArray.sort(Comparator.comparing(Supplier::getName));
  }
 
- //creating customerFile
+
  public void CreateCustomerFile(){
  try {
- FileWriter fw = new FileWriter("Customer.txt"); //reading file
- BufferedWriter bw = new BufferedWriter(fw); //making read file to buffered writer
+ FileWriter fw = new FileWriter("Customer.txt"); 
+ BufferedWriter bw = new BufferedWriter(fw); 
  bw.write("==================== CUSTOMERS ====================");
  bw.newLine();
  bw.write("ID\tName\tSurname\t\tDate of birth\tAge");
@@ -157,8 +156,7 @@ public class ReadFile {
  bw.write("===================================================");
  bw.newLine();
  for (int i = 0; i < CustArray.size(); i++) {
- //creating if statement to properly align content as tabbing wasnt correct with different char sizes
- //displaying content
+
  if (CustArray.get(i).getSurName().length() < 8) {
  bw.write(CustArray.get(i).getStHolderId() + "\t" + CustArray.get(i).getFirstName() + "\t" + CustArray.get(i).getSurName() + "\t\t" + CustArray.get(i).getDateOfBirth() + "\t" + age[i] + "\t");
  bw.newLine();
@@ -167,14 +165,13 @@ public class ReadFile {
  bw.newLine();
  }
  }
- //displaying customers that can and cannot rent
+
  bw.newLine();
  bw.write("Number of customers that can rent:");
- bw.write(String.valueOf("\t" + CustomersCanRent)); //displays null when you write an int therfore i passed it to string
+ bw.write(String.valueOf("\t" + CustomersCanRent));
  bw.newLine();
  bw.write("Number of customers who cannot rent: ");
- bw.write(String.valueOf("\t" + CustomersCannotRent)); //displays null when you write an int therfore i passed it to string
- bw.close();
+ bw.write(String.valueOf("\t" + CustomersCannotRent));
  } catch (EOFException ex) {
  System.out.println("EOF reached" + ex.getMessage());
  } catch (FileNotFoundException fnfe) {
@@ -186,7 +183,7 @@ public class ReadFile {
 
  public void CreateSupplierFile() {
  try {
- //same format as customer
+ 
  FileWriter fw = new FileWriter("Supplier.txt");
  BufferedWriter bw = new BufferedWriter(fw);
  bw.write("=========================== Supplier ============================");
